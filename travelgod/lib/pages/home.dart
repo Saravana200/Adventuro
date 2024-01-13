@@ -11,6 +11,7 @@ import 'package:travelgod/screenComponents/ScreenSize.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:travelgod/pages/botNavBar.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -38,117 +39,22 @@ class _homeState extends State<home> {
     double crossAxisCount = w / (itemwidth);
 
     SizeConfig().init(context);
-    return Scaffold(
-        body: Center(
-            child: Column(children: [
-              Container(
-                height: getProportionateScreenHeight(320),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(80.0), // Adjust the radius as needed.
-                  ),
-                  color: Color(0xFF3FBCB1),
+    return Material(
+      child: SafeArea(
+        child: NestedScrollView(
+          controller: _scrollController,
+            headerSliverBuilder: (context, innerBoxIsScrolled){
+              return [
+                SliverPersistentHeader(
+                  delegate: _MyAppBar(expandedHeight: getProportionateScreenHeight(300),backgroundColor: Color(0xFF3FBCB1), minCollapsedHeight: getProportionateScreenHeight(100)),
+                  pinned: true,
+                  floating: false,
                 ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: getProportionateScreenHeight(50),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(20)),
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                            },
-                            icon: const Icon(
-                              size: 30.0,
-                              Icons.menu_rounded ,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 30.0),
-                              child: Center(
-                                child: Text(
-                                  'Good Morning, \nMayur',
-                                  style:  GoogleFonts.montserrat (
-                                    fontSize:  25,
-                                    fontWeight:  FontWeight.w700,
-                                    color:  Color(0xffffffff),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: getProportionateScreenHeight(15),
-                    ),
-                    Container(
-
-                      padding:  EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(20),
-                        vertical: getProportionateScreenHeight(20)
-                      ),
-                      margin: EdgeInsets.all(getProportionateScreenWidth(20)),
-                      width:  double.infinity,
-                      decoration:  BoxDecoration (
-                        borderRadius:  BorderRadius.circular(20),
-                        image:  DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('images/bannerBg.png'),
-                        )
-                      ),
-                      child:
-                      Column(
-                        crossAxisAlignment:  CrossAxisAlignment.start,
-                        children:  [
-                          Container(
-                            width: 25,
-                            height: 23,
-                            child: Image.asset(
-                              'images/doubleInvertedComma.png', // Provide the correct path to your image
-                              width: 25,
-                              height: 23,
-                            ),
-                          ),
-                          SizedBox(
-                            height: getProportionateScreenHeight(10),
-                          ),
-                          Container(
-                            padding:  EdgeInsets.only(
-                                left: getProportionateScreenWidth(30),
-                            ),
-                            constraints:  BoxConstraints (
-                              maxWidth:  300,
-                            ),
-                            child:
-                            Text(
-                              'Embark on a journey where each step is a discovery and every destination tells a story.',
-                              style:  GoogleFonts.montserrat (
-                                fontSize:  17,
-                                fontWeight:  FontWeight.w700,
-                                color:  Color(0xffffffff),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(20),
-              ),
+              ];
+            },
+            body: Column(children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20),vertical: 28),
                 child: Row(
                   crossAxisAlignment:  CrossAxisAlignment.center,
                   children:  [
@@ -160,31 +66,28 @@ class _homeState extends State<home> {
                         color: const Color(0xFF979797).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: TextField(
-                        onChanged: (value) {},
-                        decoration: InputDecoration(
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            hintText: "Search Destinations",
-                            prefixIcon: const Icon(Icons.search_outlined),
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: getProportionateScreenWidth(20),
-                              vertical: getProportionateScreenWidth(14),
-                            )),
+                      child: Column(
+                        children: [
+                          TextField(
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                hintText: "Search Destinations",
+                                prefixIcon: const Icon(Icons.search_outlined),
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: getProportionateScreenWidth(20),
+                                  vertical: getProportionateScreenWidth(14),
+                                )),
+                          ),
+                        ],
                       ),
                     ),
                     // To add Arrow
                   ]),
               ),
-              SizedBox(
-                height: getProportionateScreenHeight(10),
-              ),
 
-              SizedBox(
-                height: getProportionateScreenHeight(10),
-              ),
               Row(
-                  crossAxisAlignment:  CrossAxisAlignment.start,
                   children:  [
                     Container(
                       padding:  EdgeInsets.symmetric(
@@ -204,12 +107,9 @@ class _homeState extends State<home> {
                     ),
                     // To add Arrow
                   ]),
-              SizedBox(
-                height: getProportionateScreenHeight(10),
-              ),
               Expanded(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
+                    padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10),vertical: 20),
                     child: MasonryGridView.count(
                         itemCount: 50,
                         mainAxisSpacing: getProportionateScreenHeight(10),
@@ -227,11 +127,148 @@ class _homeState extends State<home> {
                                           image: NetworkImage(
                                               "https://picsum.photos/100/${(randomHeight % 5 + 2) * 100}")))));
                         }),
-                  ))
-            ])
+                  )),
+              CustomBottomNavBar(
+                selectedMenu: MenuState.home,
+
+              )
+            ]),
+          // bottomNavigationBar: CustomBottomNavBar(
+          //   selectedMenu: MenuState.home,
         ),
-      // bottomNavigationBar: CustomBottomNavBar(
-      //   selectedMenu: MenuState.home,
+      ),
+
     );
   }
 }
+
+class _MyAppBar extends SliverPersistentHeaderDelegate {
+  final double expandedHeight;
+  final Color backgroundColor;
+  final double minCollapsedHeight;
+
+
+  _MyAppBar({
+    required this.expandedHeight,
+    required this.backgroundColor,
+    required this.minCollapsedHeight,
+  });
+
+  @override
+  Widget build(
+      BuildContext context,
+      double shrinkOffset,
+      bool overlapsContent,
+      ) {
+    final offset = shrinkOffset / expandedHeight;
+    final maxQuoteHeight = 50.0; // Adjust as needed
+    final quoteOpacity = 1 - offset;
+    final quoteIsVisible = true;
+
+    return Material(
+      color: backgroundColor,
+      child: Stack(
+        children: [
+          Positioned(
+            left: 23,
+            top:16,
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                  },
+                  icon: const Icon(
+                    size: 30.0,
+                    Icons.menu_rounded ,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(width: getProportionateScreenWidth(15),),
+                Text(
+                  'Good Morning, \nMayur',
+                  style: GoogleFonts.montserrat(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xffffffff),
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          if (quoteIsVisible)
+            Positioned(
+              top:78,
+              child: AnimatedOpacity(
+                opacity: 1-offset,
+                duration: Duration(milliseconds: 150),
+                child: Container(
+                  height: MediaQuery.of(context).size.height*0.18,
+                  // autogroup8sdhLWb (J8GPeExU7JmjdT4pag8sdh)
+                  padding:  EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20),
+                      vertical: getProportionateScreenHeight(20)
+                  ),
+                  margin: EdgeInsets.all(getProportionateScreenWidth(20)),
+
+                  decoration:  BoxDecoration (
+                      borderRadius:  BorderRadius.circular(20),
+                      image:  DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage('images/bannerBg.png'),
+                      )
+                  ),
+                  child:
+                  Stack(
+                    children:  [
+                      Container(
+                        width: 25,
+                        height: 23,
+                        child: Image.asset(
+                          'images/doubleInvertedComma.png', // Provide the correct path to your image
+                          width: 25,
+                          height: 23,
+                        ),
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(10),
+                      ),
+                      Container(
+                        padding:  EdgeInsets.only(
+                          left: getProportionateScreenWidth(30),
+                        ),
+                        constraints:  BoxConstraints (
+                          maxWidth:  300,
+                        ),
+                        child:
+                        Text(
+                          'a good mood is like a balloon, one little prick is all it takes to ruin it',
+                          style:  GoogleFonts.montserrat (
+                            fontSize:  23,
+                            fontWeight:  FontWeight.w700,
+                            color:  Color(0xffffffff),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => expandedHeight;
+
+  @override
+  double get minExtent => minCollapsedHeight;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
+  }
+}
+
