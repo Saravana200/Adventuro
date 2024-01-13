@@ -3,6 +3,9 @@
 // import 'package:travelgod/components/homeTools.dart';
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:travelgod/pages/loginPage.dart';
 // import 'package:travelgod/pages/meditation.dart';
 // import 'package:travelgod/pages/moodJournal.dart';
@@ -14,7 +17,9 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:travelgod/pages/botNavBar.dart';
 
 class home extends StatefulWidget {
-  const home({super.key});
+  home({required String name,super.key});
+
+  String name = '';
 
   @override
   State<home> createState() => _homeState();
@@ -22,9 +27,26 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
 
-
+  final uid = FirebaseAuth.instance.currentUser!.uid;
+  
   final ScrollController _scrollController = ScrollController();
   bool _isQuoteVisible = true;
+  List<String> imageUrls = [];
+  List<String> tags = [];
+
+  @override
+  void initState(){
+    super.initState();
+    FirebaseFirestore.instance.collection('images').get().then((value) {
+      value.docs.forEach((element) {
+        imageUrls.add(element['imageurl']);
+
+      });
+    }
+    );
+    
+  }
+
 
   @override
   void dispose() {
@@ -111,23 +133,47 @@ class _homeState extends State<home> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10),vertical: 20),
                     child: MasonryGridView.count(
-                        itemCount: 50,
+                        itemCount: imageUrls.length,
                         mainAxisSpacing: getProportionateScreenHeight(10),
                         crossAxisCount: crossAxisCount.toInt(),
                         itemBuilder: (context, index) {
                           int randomHeight = Random().nextInt(3);
+                          String imageUrl = imageUrls[index];
                           return UnconstrainedBox(
                               child: Container(
                                   width: getProportionateScreenWidth(170),
                                   height: (randomHeight % 5 +1) * 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(
-                                              "https://picsum.photos/100/${(randomHeight % 5 + 2) * 100}")))));
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(imageUrl),
+                                  ),
+                                )));
                         }),
                   )),
+              // Expanded(
+              //     child: Padding(
+              //       padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10),vertical: 20),
+              //       child: MasonryGridView.count(
+              //           itemCount: 50,
+              //           mainAxisSpacing: getProportionateScreenHeight(10),
+              //           crossAxisCount: crossAxisCount.toInt(),
+              //           itemBuilder: (context, index) {
+              //             int randomHeight = Random().nextInt(3);
+              //             return UnconstrainedBox(
+              //                 child: Container(
+              //                     width: getProportionateScreenWidth(170),
+              //                     height: (randomHeight % 5 +1) * 100,
+              //                     decoration: BoxDecoration(
+              //                         borderRadius: BorderRadius.circular(10),
+              //                         image: DecorationImage(
+              //                             fit: BoxFit.cover,
+              //                             image: NetworkImage(
+              //                                 "https://picsum.photos/100/${(randomHeight % 5 + 2) * 100}")))));
+              //           }),
+              //     )),
+
               CustomBottomNavBar(
                 selectedMenu: MenuState.home,
 

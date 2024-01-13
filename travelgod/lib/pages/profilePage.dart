@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:travelgod/pages/authSelection.dart';
 import 'package:travelgod/pages/botNavBar.dart';
 import 'package:travelgod/screenComponents/ScreenSize.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +101,14 @@ class _ProfileState extends State<Profile> {
                                     fontSize: 22,color: Colors.deepOrange,fontWeight: FontWeight.bold),),
                               trailing: IconButton(
                                 icon : Icon(Icons.arrow_forward_ios_outlined),
-                                onPressed: (){},
+                                onPressed: ()async{
+                                  await FirebaseAuth.instance.signOut();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => authSelection()),
+                                  );
+
+                                },
                               ),
                             ),
                           ],

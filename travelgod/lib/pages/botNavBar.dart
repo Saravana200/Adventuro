@@ -98,7 +98,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   if (selectedMenu != MenuState.home) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => home()),
+                      MaterialPageRoute(builder: (context) => home(name: '',)),
                     );
                   }
                 },
