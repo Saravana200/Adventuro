@@ -13,7 +13,7 @@ class _Repository implements Repository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://10.0.2.2:8000/';
+    baseUrl ??= 'https://4a30-119-226-236-129.ngrok-free.app/';
   }
 
   final Dio _dio;
@@ -44,6 +44,62 @@ class _Repository implements Repository {
               baseUrl,
             ))));
     final value = Test.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<Places> GetPlaces({String? tag}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'tag': tag};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Places>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/search',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = Places.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<Chatreply> GetMessage({ChatMsg? message}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = message;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Chatreply>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/chat',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = Chatreply.fromJson(_result.data!);
     return value;
   }
 

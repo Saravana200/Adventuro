@@ -30,8 +30,8 @@ class MentalHealth extends StatelessWidget{
     final uid = FirebaseAuth.instance.currentUser?.uid;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RedContainerApp(),
-      // home: uid==null?authSelection():home(name:'Mayur')
+      // home: RedContainerApp(),
+      home: uid==null?authSelection():home(name:'Mayur')
     );
   }
 

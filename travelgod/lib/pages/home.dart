@@ -4,9 +4,11 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:travelgod/pages/loginPage.dart';
+import 'package:travelgod/phoenix/repository.dart';
 // import 'package:travelgod/pages/meditation.dart';
 // import 'package:travelgod/pages/moodJournal.dart';
 // import 'package:travelgod/material.dart';
@@ -15,6 +17,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:travelgod/pages/botNavBar.dart';
+
+import '../Places.dart';
 
 class home extends StatefulWidget {
   home({required String name,super.key});
@@ -28,6 +32,14 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
 
   final uid = FirebaseAuth.instance.currentUser!.uid;
+  final client= Repository(
+  Dio(
+  BaseOptions(
+  contentType: "application/json",
+  baseUrl: "http://10.0.2.2:8000",
+  ),
+  ),
+  );
   
   final ScrollController _scrollController = ScrollController();
   bool _isQuoteVisible = true;
@@ -35,16 +47,23 @@ class _homeState extends State<home> {
   List<String> tags = [];
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    FirebaseFirestore.instance.collection('images').get().then((value) {
-      value.docs.forEach((element) {
-        imageUrls.add(element['imageurl']);
+    getData();
+  }
 
+  Future<void> getData() async{
+    await FirebaseFirestore.instance.collection('images').get().then((value) {
+      value.docs.forEach((element) {
+        print(element['imageUrl']);
+        imageUrls.add(element['imageUrl']);
+        tags.add(element['tag']);
       });
-    }
-    );
-    
+    });
+    setState(() {
+      imageUrls = imageUrls;
+      tags=tags;
+    });
   }
 
 
@@ -53,7 +72,9 @@ class _homeState extends State<home> {
     _scrollController.dispose();
     super.dispose();
   }
-
+  bool _isLongPressed = false;
+  Set<int> selectedImages = Set<int>();
+  String tag = '';
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -110,6 +131,7 @@ class _homeState extends State<home> {
               ),
 
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children:  [
                     Container(
                       padding:  EdgeInsets.symmetric(
@@ -127,6 +149,32 @@ class _homeState extends State<home> {
                         ),
                       ),
                     ),
+                    Visibility(
+                      visible: _isLongPressed,
+                      child: ElevatedButton(
+                          onPressed: ()async{
+                            selectedImages.forEach((element) {
+                              tag+=tags[element]+",";
+                            });
+                            final response=await client.GetPlaces(tag:tag);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => PlacesView(res: response,)),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xB98170D2), // Change the color to your desired color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0), // Adjust the corner radius as needed
+                            ),
+                          ),
+                          child: Text("Submit",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800
+                          ),)
+                      ),
+                    )
                     // To add Arrow
                   ]),
               Expanded(
@@ -137,19 +185,72 @@ class _homeState extends State<home> {
                         mainAxisSpacing: getProportionateScreenHeight(10),
                         crossAxisCount: crossAxisCount.toInt(),
                         itemBuilder: (context, index) {
-                          int randomHeight = Random().nextInt(3);
+                          // int randomHeight = Random().nextInt(3);
                           String imageUrl = imageUrls[index];
+                          // return UnconstrainedBox(
+                          //     child: Container(
+                          //         width: getProportionateScreenWidth(170),
+                          //         height: (randomHeight % 5 +1) * 100,
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(10),
+                          //         image: DecorationImage(
+                          //           fit: BoxFit.cover,
+                          //           image: NetworkImage(imageUrl),
+                          //         ),
+                          //       )));
                           return UnconstrainedBox(
-                              child: Container(
-                                  width: getProportionateScreenWidth(170),
-                                  height: (randomHeight % 5 +1) * 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(imageUrl),
+                            child: Stack(
+                              alignment: Alignment.topRight,
+                              children: [
+                                GestureDetector(
+                                  onLongPress: () {
+                                    setState(() {
+                                      _isLongPressed = true;
+                                      selectedImages.add(index);
+                                    });
+                                  },
+                                  onTap: (){
+                                    if(_isLongPressed){
+                                      setState(() {
+                                        selectedImages.remove(index);
+                                        if(selectedImages.isEmpty){
+                                          _isLongPressed = false;
+                                        }
+                                      });
+                                    }
+                                  },
+                                  child: Container(
+                                    width: getProportionateScreenWidth(170),
+                                    height: (2 % 5 + 1) * 100,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(imageUrl),
+                                      ),
+                                    ),
                                   ),
-                                )));
+                                ),
+                                Visibility(
+                                  visible: _isLongPressed && selectedImages.contains(index),
+                                  child: Container(
+                                    margin: EdgeInsets.all(5.0),
+                                    padding: EdgeInsets.all(3.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black54,
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Icon(
+                                      Icons.check,
+                                      color: Colors.green,
+                                      size: 20.0,
+                                    ),
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          );
                         }),
                   )),
               // Expanded(

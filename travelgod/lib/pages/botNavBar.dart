@@ -5,9 +5,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travelgod/pages/chat.dart';
 import 'package:travelgod/pages/profilePage.dart';
 
+import '../UserUpload.dart';
 
 
-enum MenuState { home, dashboard, chatbot, profile }
+
+enum MenuState { home, upload, chatbot, profile }
 
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({
@@ -102,6 +104,23 @@ class CustomBottomNavBar extends StatelessWidget {
                     );
                   }
                 },
+              ),
+              IconButton(
+                icon: MenuState.upload == selectedMenu
+                    ? SvgPicture.asset(
+                  'images/botNavBar/plus-circle-svgrepo.svg',
+                  color: Color(0xFF3FBCB1), // Set the desired color here.
+                )
+                    : SvgPicture.asset(
+                  'images/botNavBar/plus-circle-svgrepo-com.svg',
+                  color: Color(0xFF838383), // Set the desired color here.
+                ),
+                onPressed: () { if (selectedMenu != MenuState.upload) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserUpload()),
+                  );
+                }  },
               ),
               IconButton(
                 icon: MenuState.profile == selectedMenu
