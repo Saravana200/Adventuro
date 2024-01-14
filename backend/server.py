@@ -1,21 +1,23 @@
 from fastapi import FastAPI
-from querier import search
+from querier import search,reverse_search_engine
 from pydantic import BaseModel
 from chatbot import chatbot_message 
+import time
+from pydantic import BaseModel
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import nltk  
-from nltk.tag import pos_tag
+from webdriver_manager.chrome import ChromeDriverManager
 from PIL import Image
 app = FastAPI()
 
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
+
 
 @app.get("/search")
 async def read_items(tag: str=""):
@@ -25,6 +27,11 @@ async def read_items(tag: str=""):
 
 class Chatbot(BaseModel):
     message: str |None=None
+
+@app.get("/describeimage")
+async def describe(url: str=""):
+    print(url)
+    return await reverse_search_engine(url)
 
 @app.post("/chat")
 async def chatbot_mssg(message:Chatbot):
