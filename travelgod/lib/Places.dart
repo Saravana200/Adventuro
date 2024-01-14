@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:travelgod/screenComponents/ScreenSize.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'CurrencyData/Currency.dart';
+import 'MoneyConvert.dart';
 import 'datatypes/data.dart';
 
 class PlacesView extends StatefulWidget {
@@ -14,6 +16,22 @@ class PlacesView extends StatefulWidget {
 }
 
 class _PlacesViewState extends State<PlacesView> {
+
+  String? budget;
+
+  void getAmounts() async {
+    var usdConvert = await MoneyConvert.convert(
+        Currency(Currency.INR, amount: 1), Currency(Currency.USD));
+    setState(() {
+      if(usdConvert!=null){
+        budget = usdConvert.toStringAsFixed(2);
+      }
+      else{
+        budget = "ERROR";
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -25,7 +43,8 @@ class _PlacesViewState extends State<PlacesView> {
           itemCount: widget.res.places.length,
           itemBuilder: (context, index) {
             var chu=widget.res.places[index];
-          return buildCard(chu.location.name,'',chu.image_url,chu.description.length>34?chu.description:"",chu.location.position.latitude,chu.location.position.longitude);
+            print(chu.price);
+          return buildCard(chu.location.name,chu.price,chu.image_url,chu.description.length>34?chu.description:"",chu.location.position.latitude,chu.location.position.longitude);
           },
         ));
   }
@@ -39,6 +58,7 @@ Future<void> openGoogleMaps(double latitude, double longitude) async {
     throw 'Could not launch Google Maps';
   }
 }
+
 
 
 Card buildCard(head,sub,url,supp,lati,longi) {
@@ -58,7 +78,17 @@ Card buildCard(head,sub,url,supp,lati,longi) {
         children: [
           ListTile(
             title: Text(heading),
-            subtitle: Text(subheading),
+            subtitle: Row(
+              children: [
+                Text(subheading),
+                IconButton(
+                    onPressed: (){
+
+                    },
+                    icon: Icon(Icons.arrow_right)
+                )
+              ],
+            ),
             trailing: Icon(Icons.favorite_outline),
           ),
           Container(
@@ -91,7 +121,6 @@ Card buildCard(head,sub,url,supp,lati,longi) {
           )
         ],
       ));
-
 }
 
 

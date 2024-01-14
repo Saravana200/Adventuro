@@ -45,11 +45,14 @@ dependencies:
   firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
   cloud_firestore: ^4.14.0
+  firebase_analytics: ^10.8.0
+  image_picker: ^1.0.7
   retrofit: '>=4.0.0 <5.0.0'
   logger: any  #for logging purpose
   json_annotation: ^4.8.1
   url_launcher: ^6.2.3
   http: ^1.0.0
+  firebase_storage: ^11.6.0
 
 
 dev_dependencies:

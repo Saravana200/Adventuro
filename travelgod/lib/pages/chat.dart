@@ -109,8 +109,12 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                             print(value.message);
                             setState(() {
                               _messages.removeLast();
+                              _messages.add(ChatMessage(messageContent: value.rating, messageType: 'ChatBot'));
+                              if(value.best_time!='Best time to visit: nan'){
+                                _messages.add(ChatMessage(messageContent: value.best_time, messageType: 'ChatBot'));
+                              }
                               value.message.forEach((element) {
-                                _messages.add(ChatMessage(messageContent: element.substring(0,50), messageType: 'ChatBot'));
+                                _messages.add(ChatMessage(messageContent: element.substring(0,100), messageType: 'ChatBot'));
                               });
                             });
                           });

@@ -176,7 +176,7 @@ class _loginPageState extends State<loginPage> {
                     if (message!.contains('Success')){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => home(name: '',)),
+                        MaterialPageRoute(builder: (context) => home()),
                       );
                     }
                     ScaffoldMessenger.of(context).showSnackBar(

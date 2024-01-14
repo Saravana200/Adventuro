@@ -21,9 +21,8 @@ import 'package:travelgod/pages/botNavBar.dart';
 import '../Places.dart';
 
 class home extends StatefulWidget {
-  home({required String name,super.key});
+  home({super.key});
 
-  String name = '';
 
   @override
   State<home> createState() => _homeState();
@@ -32,6 +31,7 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
 
   final uid = FirebaseAuth.instance.currentUser!.uid;
+  String? name='';
   final client= Repository(
   Dio(
   BaseOptions(
@@ -49,7 +49,21 @@ class _homeState extends State<home> {
   @override
   void initState() {
     super.initState();
+    getUser();
     getData();
+  }
+
+  Future<String?> getUser()async{
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final userSnapshot = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+    if (userSnapshot.exists) {
+      // User exists, you can access user data using userSnapshot.data()
+      print('User exists: ${userSnapshot.data()}');
+    } else {
+      // User does not exist
+      print('User does not exist');
+    }
   }
 
   Future<void> getData() async{
@@ -91,7 +105,7 @@ class _homeState extends State<home> {
             headerSliverBuilder: (context, innerBoxIsScrolled){
               return [
                 SliverPersistentHeader(
-                  delegate: _MyAppBar(expandedHeight: getProportionateScreenHeight(300),backgroundColor: Color(0xFF3FBCB1), minCollapsedHeight: getProportionateScreenHeight(100)),
+                  delegate: _MyAppBar(expandedHeight: getProportionateScreenHeight(300),backgroundColor: Color(0xFF3FBCB1), minCollapsedHeight: getProportionateScreenHeight(100),name:name),
                   pinned: true,
                   floating: false,
                 ),
@@ -293,12 +307,14 @@ class _MyAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
   final Color backgroundColor;
   final double minCollapsedHeight;
+  final String? name;
 
 
   _MyAppBar({
     required this.expandedHeight,
     required this.backgroundColor,
     required this.minCollapsedHeight,
+    required this.name
   });
 
   @override
@@ -332,7 +348,7 @@ class _MyAppBar extends SliverPersistentHeaderDelegate {
                 ),
                 SizedBox(width: getProportionateScreenWidth(15),),
                 Text(
-                  'Good Morning, \nMayur',
+                  'Good Morning, ${name}',
                   style: GoogleFonts.montserrat(
                     fontSize: 25,
                     fontWeight: FontWeight.w700,

@@ -237,7 +237,7 @@ class _signinpageState extends State<signinpage> {
                               print('DocumentSnapshot added with ID: ${doc.id}'));
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => home(name:userNameController.text)),
+                            MaterialPageRoute(builder: (context) => home()),
                           );
                         }
                       },
