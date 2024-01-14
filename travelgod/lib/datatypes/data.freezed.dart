@@ -293,6 +293,149 @@ abstract class _ChatMsg implements ChatMsg {
       throw _privateConstructorUsedError;
 }
 
+PlaceMsg _$PlaceMsgFromJson(Map<String, dynamic> json) {
+  return _PlaceMsg.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PlaceMsg {
+  String? get message => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PlaceMsgCopyWith<PlaceMsg> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PlaceMsgCopyWith<$Res> {
+  factory $PlaceMsgCopyWith(PlaceMsg value, $Res Function(PlaceMsg) then) =
+      _$PlaceMsgCopyWithImpl<$Res, PlaceMsg>;
+  @useResult
+  $Res call({String? message});
+}
+
+/// @nodoc
+class _$PlaceMsgCopyWithImpl<$Res, $Val extends PlaceMsg>
+    implements $PlaceMsgCopyWith<$Res> {
+  _$PlaceMsgCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_value.copyWith(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$PlaceMsgImplCopyWith<$Res>
+    implements $PlaceMsgCopyWith<$Res> {
+  factory _$$PlaceMsgImplCopyWith(
+          _$PlaceMsgImpl value, $Res Function(_$PlaceMsgImpl) then) =
+      __$$PlaceMsgImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? message});
+}
+
+/// @nodoc
+class __$$PlaceMsgImplCopyWithImpl<$Res>
+    extends _$PlaceMsgCopyWithImpl<$Res, _$PlaceMsgImpl>
+    implements _$$PlaceMsgImplCopyWith<$Res> {
+  __$$PlaceMsgImplCopyWithImpl(
+      _$PlaceMsgImpl _value, $Res Function(_$PlaceMsgImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$PlaceMsgImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$PlaceMsgImpl with DiagnosticableTreeMixin implements _PlaceMsg {
+  const _$PlaceMsgImpl({this.message});
+
+  factory _$PlaceMsgImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PlaceMsgImplFromJson(json);
+
+  @override
+  final String? message;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PlaceMsg(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PlaceMsg'))
+      ..add(DiagnosticsProperty('message', message));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PlaceMsgImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PlaceMsgImplCopyWith<_$PlaceMsgImpl> get copyWith =>
+      __$$PlaceMsgImplCopyWithImpl<_$PlaceMsgImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$PlaceMsgImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PlaceMsg implements PlaceMsg {
+  const factory _PlaceMsg({final String? message}) = _$PlaceMsgImpl;
+
+  factory _PlaceMsg.fromJson(Map<String, dynamic> json) =
+      _$PlaceMsgImpl.fromJson;
+
+  @override
+  String? get message;
+  @override
+  @JsonKey(ignore: true)
+  _$$PlaceMsgImplCopyWith<_$PlaceMsgImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 Chatreply _$ChatreplyFromJson(Map<String, dynamic> json) {
   return _Chatreply.fromJson(json);
 }

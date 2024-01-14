@@ -27,13 +27,6 @@ class adventuro extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     final uid = FirebaseAuth.instance.currentUser?.uid;
-    String? name;
-    if(uid!=null){
-      getUser().then((value){
-        name = value;
-        print(name);
-      });
-    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: RedContainerApp(),
@@ -41,11 +34,4 @@ class adventuro extends StatelessWidget{
     );
   }
 
-}
-Future<String?> getUser()async{
-  final uid = FirebaseAuth.instance.currentUser!.uid;
-  final user = await FirebaseFirestore.instance.collection('users').doc(uid).get().then((value){
-    print(value.data());
-  });
-  return " ";
 }

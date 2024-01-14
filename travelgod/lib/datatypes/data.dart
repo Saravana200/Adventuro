@@ -23,6 +23,15 @@ class ChatMsg with _$ChatMsg {
 }
 
 @freezed
+class PlaceMsg with _$PlaceMsg {
+  const factory PlaceMsg({
+    String? message,
+  }) = _PlaceMsg;
+  factory PlaceMsg.fromJson(Map<String, dynamic> json) =>
+      _$PlaceMsgFromJson(json);
+}
+
+@freezed
 class Chatreply with _$Chatreply {
   const factory Chatreply({
     required List<String> message,

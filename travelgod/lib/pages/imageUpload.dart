@@ -1,6 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:image_picker/image_picker.dart';
 // import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 //
 import 'package:firebase_auth/firebase_auth.dart';
@@ -91,6 +92,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
+import 'package:travelgod/pages/RecoPage.dart';
+
+import '../phoenix/repository.dart';
 
 //void main() => runApp(MyApp());
 
@@ -107,6 +111,14 @@ class _UploadingImageToFirebaseStorageState extends State<UploadingImageToFireba
   final Color yellow = Color(0xfffbc31b);
   final Color orange = Color(0xfffb6900);
   File? _imageFile;
+  final client= Repository(
+    Dio(
+      BaseOptions(
+        contentType: "application/json",
+        baseUrl: "http://10.0.2.2:8000",
+      ),
+    ),
+  );
 
   ///NOTE: Only supported on Android & iOS
   ///Needs image_picker plugin {https://pub.dev/packages/image_picker}
@@ -137,7 +149,7 @@ class _UploadingImageToFirebaseStorageState extends State<UploadingImageToFireba
   //         (value) => print("Done: $value"),
   //   );
   // }
-  Future uploadImageToFirebase() async {
+  Future uploadImageToFirebase(BuildContext context) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     final String uid = user!.uid;
@@ -149,6 +161,12 @@ class _UploadingImageToFirebaseStorageState extends State<UploadingImageToFireba
 
       String downloadURL = await storage.ref(imageName).getDownloadURL();
       print('Image URL: $downloadURL');
+      final response = await client.GetImageplaces(url: downloadURL);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RecoPage(res: response,)),
+      );
+
     } catch (e) {
       print('Error uploading image: $e');
     }
@@ -238,7 +256,7 @@ class _UploadingImageToFirebaseStorageState extends State<UploadingImageToFireba
                 ),
                 borderRadius: BorderRadius.circular(30.0)),
             child: TextButton(
-              onPressed: () => uploadImageToFirebase(),
+              onPressed: () => uploadImageToFirebase(context),
               child: Text(
                 "Upload Image",
                 style: TextStyle(fontSize: 20),
