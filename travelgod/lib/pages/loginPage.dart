@@ -3,6 +3,7 @@ import 'signinPage.dart';
 import 'package:flutter/material.dart';
 import 'package:travelgod/screenComponents/ScreenSize.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travelgod/firebase/auth_service.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -79,7 +80,7 @@ class _loginPageState extends State<loginPage> {
                     ),
                     color: const Color(0xFFF9F9F9),
                   ),
-                  child: const Row(
+                  child:  Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(
@@ -95,6 +96,7 @@ class _loginPageState extends State<loginPage> {
                       ),
                       Expanded(
                         child: TextField(
+                          controller: emailController,
                           decoration: InputDecoration(
                             border: InputBorder.none, // Remove the default border.
                             hintText: 'Enter your Email',
@@ -124,7 +126,7 @@ class _loginPageState extends State<loginPage> {
                     ),
                     color: const Color(0xFFF9F9F9),
                   ),
-                  child: const Row(
+                  child:  Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(
@@ -140,6 +142,7 @@ class _loginPageState extends State<loginPage> {
                       ),
                       Expanded(
                         child: TextField(
+                          controller: passwordController,
                           decoration: InputDecoration(
                             border: InputBorder.none, // Remove the default border.
                             hintText: 'Enter your Password',
@@ -165,11 +168,23 @@ class _loginPageState extends State<loginPage> {
                     vertical: getProportionateScreenWidth(20)),
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => home()),
+                  onPressed: () async{
+                    final message = await AuthService().login(
+                      email: emailController.text,
+                      password: passwordController.text,
                     );
+                    if (message!.contains('Success')){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => home(name: '',)),
+                      );
+                    }
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(message),
+                      ),
+                    );
+
                   },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,

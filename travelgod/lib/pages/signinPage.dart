@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:travelgod/firebase/usermodel.dart';
 import 'package:travelgod/pages/home.dart';
 import 'package:travelgod/pages/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:travelgod/screenComponents/ScreenSize.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travelgod/firebase/auth_service.dart';
 
 class signinpage extends StatefulWidget {
   const signinpage({super.key});
@@ -12,7 +16,9 @@ class signinpage extends StatefulWidget {
 }
 
 class _signinpageState extends State<signinpage> {
+  final db = FirebaseFirestore.instance;
   final emailController = TextEditingController();
+  final userNameController = TextEditingController();
 
   final passwordController = TextEditingController();
 
@@ -79,7 +85,7 @@ class _signinpageState extends State<signinpage> {
                         ),
                         color: const Color(0xFFF9F9F9),
                       ),
-                      child: const Row(
+                      child:  Row(
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
@@ -95,6 +101,7 @@ class _signinpageState extends State<signinpage> {
                           ),
                           Expanded(
                             child: TextField(
+                              controller: userNameController,
                               decoration: InputDecoration(
                                 border: InputBorder.none, // Remove the default border.
                                 hintText: 'Enter your name',
@@ -125,7 +132,7 @@ class _signinpageState extends State<signinpage> {
                         ),
                         color: const Color(0xFFF9F9F9),
                       ),
-                      child: const Row(
+                      child:  Row(
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
@@ -141,6 +148,7 @@ class _signinpageState extends State<signinpage> {
                           ),
                           Expanded(
                             child: TextField(
+                              controller: emailController,
                               decoration: InputDecoration(
                                 border: InputBorder.none, // Remove the default border.
                                 hintText: 'Enter your Email',
@@ -170,7 +178,7 @@ class _signinpageState extends State<signinpage> {
                         ),
                         color: const Color(0xFFF9F9F9),
                       ),
-                      child: const Row(
+                      child: Row(
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
@@ -186,6 +194,7 @@ class _signinpageState extends State<signinpage> {
                           ),
                           Expanded(
                             child: TextField(
+                              controller: passwordController,
                               decoration: InputDecoration(
                                 border: InputBorder.none, // Remove the default border.
                                 hintText: 'Enter your Password',
@@ -211,11 +220,26 @@ class _signinpageState extends State<signinpage> {
                         vertical: getProportionateScreenWidth(20)),
                     width: double.infinity,
                     child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => home()),
+                      onPressed: () async{
+                        print(emailController.text);
+                        final message = await AuthService().registration(
+                          email: emailController.text,
+                          password: passwordController.text,
                         );
+
+                        if (message!.contains('Success')) {
+                          Map<String,dynamic> userData = {
+                            'UserName' : userNameController.text,
+                            'EmailAddress' : emailController.text,
+                          };
+                          // UserModel aa =UserModel(UserName: userNameController.text, emailAddress: emailController.text, password: passwordController.text, userUid: FirebaseAuth.instance.currentUser!.uid);
+                          await db.collection("users").add(userData).then((DocumentReference doc) =>
+                              print('DocumentSnapshot added with ID: ${doc.id}'));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => home(name:userNameController.text)),
+                          );
+                        }
                       },
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,
