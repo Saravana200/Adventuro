@@ -21,8 +21,14 @@ import 'package:travelgod/pages/botNavBar.dart';
 import '../Places.dart';
 
 class home extends StatefulWidget {
+<<<<<<< Updated upstream
   home({super.key});
 
+=======
+  home({required String? name,super.key});
+
+  String? name = '';
+>>>>>>> Stashed changes
 
   @override
   State<home> createState() => _homeState();
