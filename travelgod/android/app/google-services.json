@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "640173401954",
+    "project_id": "adventuro-1f95c",
+    "storage_bucket": "adventuro-1f95c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640173401954:android:9ec9c4297382233e1eae3b",
+        "android_client_info": {
+          "package_name": "com.example.travelgod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYqpCwaOglH0eFOUup_VIgGa_1SClY40g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
