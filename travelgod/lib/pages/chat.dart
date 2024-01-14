@@ -15,7 +15,7 @@ class ChatBotScreen extends StatefulWidget {
 }
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
-
+  bool reply=false;
   final TextEditingController _textController = TextEditingController();
   final List<ChatMessage> _messages = [ChatMessage(messageContent: "Hey, it’s great to see you again Mayur. What are you up to?", messageType: "ChatBot")];
   final client= Repository(
@@ -99,12 +99,20 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                       ),
                       SizedBox(width: 15,),
                       FloatingActionButton(
-                        onPressed: () async {
+                        onPressed: () {
                           debugPrint("Hellooo");
-                          final response = await client.GetMessage(message: ChatMsg(message: _textController.text));
-                          print(response.message);
                           setState(() {
                             _messages.add(ChatMessage(messageContent: _textController.text, messageType: "Sender"));
+                            _messages.add(ChatMessage(messageContent: '...', messageType: 'ChatBot'));
+                          });
+                          client.GetMessage(message: ChatMsg(message: _textController.text)).then((value){
+                            print(value.message);
+                            setState(() {
+                              _messages.removeLast();
+                              value.message.forEach((element) {
+                                _messages.add(ChatMessage(messageContent: element.substring(0,50), messageType: 'ChatBot'));
+                              });
+                            });
                           });
                           _textController.clear();
                         },
