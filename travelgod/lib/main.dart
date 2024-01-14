@@ -17,20 +17,12 @@ void main()async{
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-<<<<<<< Updated upstream
 
   runApp(adventuro());
 }
 
 class adventuro extends StatelessWidget{
   const adventuro({Key? key}) : super(key: key);
-=======
-  runApp(MentalHealth());
-}
-
-class MentalHealth extends StatelessWidget{
-  const MentalHealth({Key? key}) : super(key: key);
->>>>>>> Stashed changes
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +37,7 @@ class MentalHealth extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: RedContainerApp(),
-<<<<<<< Updated upstream
       home: uid==null?authSelection():home()
-=======
-      home: uid==null?authSelection():home(name:name)
->>>>>>> Stashed changes
     );
   }
 
