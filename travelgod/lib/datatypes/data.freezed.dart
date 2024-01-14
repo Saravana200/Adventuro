@@ -641,6 +641,7 @@ mixin _$Place {
   String get image_url => throw _privateConstructorUsedError;
   Location get location => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -653,7 +654,11 @@ abstract class $PlaceCopyWith<$Res> {
       _$PlaceCopyWithImpl<$Res, Place>;
   @useResult
   $Res call(
-      {String id, String image_url, Location location, String description});
+      {String id,
+      String image_url,
+      Location location,
+      String description,
+      String price});
 
   $LocationCopyWith<$Res> get location;
 }
@@ -675,6 +680,7 @@ class _$PlaceCopyWithImpl<$Res, $Val extends Place>
     Object? image_url = null,
     Object? location = null,
     Object? description = null,
+    Object? price = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -692,6 +698,10 @@ class _$PlaceCopyWithImpl<$Res, $Val extends Place>
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -713,7 +723,11 @@ abstract class _$$PlaceImplCopyWith<$Res> implements $PlaceCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id, String image_url, Location location, String description});
+      {String id,
+      String image_url,
+      Location location,
+      String description,
+      String price});
 
   @override
   $LocationCopyWith<$Res> get location;
@@ -734,6 +748,7 @@ class __$$PlaceImplCopyWithImpl<$Res>
     Object? image_url = null,
     Object? location = null,
     Object? description = null,
+    Object? price = null,
   }) {
     return _then(_$PlaceImpl(
       id: null == id
@@ -752,6 +767,10 @@ class __$$PlaceImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -763,7 +782,8 @@ class _$PlaceImpl with DiagnosticableTreeMixin implements _Place {
       {required this.id,
       required this.image_url,
       required this.location,
-      required this.description});
+      required this.description,
+      required this.price});
 
   factory _$PlaceImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlaceImplFromJson(json);
@@ -776,10 +796,12 @@ class _$PlaceImpl with DiagnosticableTreeMixin implements _Place {
   final Location location;
   @override
   final String description;
+  @override
+  final String price;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Place(id: $id, image_url: $image_url, location: $location, description: $description)';
+    return 'Place(id: $id, image_url: $image_url, location: $location, description: $description, price: $price)';
   }
 
   @override
@@ -790,7 +812,8 @@ class _$PlaceImpl with DiagnosticableTreeMixin implements _Place {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('image_url', image_url))
       ..add(DiagnosticsProperty('location', location))
-      ..add(DiagnosticsProperty('description', description));
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('price', price));
   }
 
   @override
@@ -804,13 +827,14 @@ class _$PlaceImpl with DiagnosticableTreeMixin implements _Place {
             (identical(other.location, location) ||
                 other.location == location) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.price, price) || other.price == price));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, image_url, location, description);
+      Object.hash(runtimeType, id, image_url, location, description, price);
 
   @JsonKey(ignore: true)
   @override
@@ -831,7 +855,8 @@ abstract class _Place implements Place {
       {required final String id,
       required final String image_url,
       required final Location location,
-      required final String description}) = _$PlaceImpl;
+      required final String description,
+      required final String price}) = _$PlaceImpl;
 
   factory _Place.fromJson(Map<String, dynamic> json) = _$PlaceImpl.fromJson;
 
@@ -843,6 +868,8 @@ abstract class _Place implements Place {
   Location get location;
   @override
   String get description;
+  @override
+  String get price;
   @override
   @JsonKey(ignore: true)
   _$$PlaceImplCopyWith<_$PlaceImpl> get copyWith =>

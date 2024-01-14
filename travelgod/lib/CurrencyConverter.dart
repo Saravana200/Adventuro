@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart ';
+import 'package:flutter/material.dart';
 
 import 'CurrencyData/Currency.dart';
 import 'MoneyConvert.dart';

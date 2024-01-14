@@ -56,6 +56,7 @@ _$PlaceImpl _$$PlaceImplFromJson(Map<String, dynamic> json) => _$PlaceImpl(
       image_url: json['image_url'] as String,
       location: Location.fromJson(json['location'] as Map<String, dynamic>),
       description: json['description'] as String,
+      price: json['price'] as String,
     );
 
 Map<String, dynamic> _$$PlaceImplToJson(_$PlaceImpl instance) =>
@@ -64,6 +65,7 @@ Map<String, dynamic> _$$PlaceImplToJson(_$PlaceImpl instance) =>
       'image_url': instance.image_url,
       'location': instance.location,
       'description': instance.description,
+      'price': instance.price,
     };
 
 _$LocationImpl _$$LocationImplFromJson(Map<String, dynamic> json) =>

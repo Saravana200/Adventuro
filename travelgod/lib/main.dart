@@ -24,16 +24,13 @@ void main()async{
 class adventuro extends StatelessWidget{
   const adventuro({Key? key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: RedContainerApp(),
-      home: uid==null?authSelection():home(name:'Mayur')
-      // home: UploadingImageToFirebaseStorage(),
+      home: uid==null?authSelection():home()
     );
   }
 
