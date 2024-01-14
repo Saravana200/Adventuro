@@ -75,8 +75,8 @@ async def reverse_search_engine(message):
         ChatMessage(role="user", content="suggest me simillar places like this"+message+" within 200 words")
     ]
 
-    resp = client.chat(messages).json()
-    return resp["message"]["content"]
+    resp = client.chat(messages)
+    return resp.message.content
 
 
 def clean_html(raw_html):
