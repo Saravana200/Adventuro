@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
-import 'package:money_converter/Currency.dart';
 
+import 'CurrencyData/Currency.dart';
 import 'MoneyCon.dart';
 
 

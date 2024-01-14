@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart ';
-import 'package:money_converter/Currency.dart';
 
+import 'CurrencyData/Currency.dart';
 import 'MoneyConvert.dart';
 class CurrencyConverter extends StatefulWidget {
   const CurrencyConverter({Key? key}) : super(key: key);

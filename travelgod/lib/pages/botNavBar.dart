@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travelgod/pages/chat.dart';
 import 'package:travelgod/pages/profilePage.dart';
+import 'package:travelgod/screenComponents/ScreenSize.dart';
 
 import '../UserUpload.dart';
 
@@ -21,6 +22,7 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 14),
       decoration: BoxDecoration(
@@ -69,14 +71,14 @@ class CustomBottomNavBar extends StatelessWidget {
                     ? SvgPicture.asset(
                   'images/botNavBar/chatbot-fill.svg',
                   color: Color(0xFF3FBCB1),
-                  width: 35, // Set the desired width here.
-                  height: 35,// Set the desired color here.
+                  width: getProportionateScreenWidth(25), // Set the desired width here.
+                  height: getProportionateScreenHeight(35),// Set the desired color here.
                 )
                     : SvgPicture.asset(
                   'images/botNavBar/chatbot.svg',
                   color: Color(0xFF838383),
-                  width: 23, // Set the desired width here.
-                  height: 23,// Set the desired color here.
+                  width: getProportionateScreenHeight(28) , // Set the desired width here.
+                  height: getProportionateScreenHeight(33) ,// Set the desired color here.
                 ),
                 onPressed: () { if (selectedMenu != MenuState.chatbot) {
                   Navigator.push(
@@ -91,10 +93,14 @@ class CustomBottomNavBar extends StatelessWidget {
                     ? SvgPicture.asset(
                   'images/botNavBar/house-fill.svg',
                   color: Color(0xFF3FBCB1), // Set the desired color here.
+                  width: getProportionateScreenWidth(25), // Set the desired width here.
+                  height: getProportionateScreenHeight(35),
                 )
                     : SvgPicture.asset(
                   'images/botNavBar/house.svg',
                   color: Color(0xFF838383), // Set the desired color here.
+                  width: getProportionateScreenWidth(23), // Set the desired width here.
+                  height: getProportionateScreenHeight(33),
                 ),
                 onPressed: () {
                   if (selectedMenu != MenuState.home) {
@@ -110,10 +116,14 @@ class CustomBottomNavBar extends StatelessWidget {
                     ? SvgPicture.asset(
                   'images/botNavBar/plus-circle-svgrepo.svg',
                   color: Color(0xFF3FBCB1), // Set the desired color here.
+                  width: getProportionateScreenWidth(25), // Set the desired width here.
+                  height: getProportionateScreenHeight(35),
                 )
                     : SvgPicture.asset(
                   'images/botNavBar/plus-circle-svgrepo-com.svg',
                   color: Color(0xFF838383), // Set the desired color here.
+                  width: getProportionateScreenWidth(23), // Set the desired width here.
+                  height: getProportionateScreenHeight(33),
                 ),
                 onPressed: () { if (selectedMenu != MenuState.upload) {
                   Navigator.push(
@@ -127,10 +137,14 @@ class CustomBottomNavBar extends StatelessWidget {
                     ? SvgPicture.asset(
                   'images/botNavBar/person-fill.svg',
                   color: Color(0xFF3FBCB1), // Set the desired color here.
+                  width: getProportionateScreenWidth(25), // Set the desired width here.
+                  height: getProportionateScreenHeight(35),
                 )
                     : SvgPicture.asset(
                   'images/botNavBar/person.svg',
                   color: Color(0xFF838383), // Set the desired color here.
+                  width: getProportionateScreenWidth(23), // Set the desired width here.
+                  height: getProportionateScreenHeight(33),
                 ),
                 onPressed: () { if (selectedMenu != MenuState.profile) {
                   Navigator.push(

@@ -77,11 +77,13 @@ class _homeState extends State<home> {
   String tag = '';
   @override
   Widget build(BuildContext context) {
-    double w = MediaQuery.of(context).size.width;
-    double itemwidth = 200;
-    double crossAxisCount = w / (itemwidth);
+
 
     SizeConfig().init(context);
+
+    double w = MediaQuery.of(context).size.width;
+    double itemwidth = getProportionateScreenWidth(180);
+    double crossAxisCount = w / (itemwidth);
     return Material(
       child: SafeArea(
         child: NestedScrollView(
@@ -97,7 +99,7 @@ class _homeState extends State<home> {
             },
             body: Column(children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20),vertical: 28),
+                padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20),vertical: getProportionateScreenWidth(28)),
                 child: Row(
                   crossAxisAlignment:  CrossAxisAlignment.center,
                   children:  [
@@ -106,29 +108,27 @@ class _homeState extends State<home> {
                       width: SizeConfig.screenWidth * 0.89,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF979797).withOpacity(0.1),
+                        color: const Color(0xFFA0A0A0).withOpacity(0.4),
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: Column(
-                        children: [
-                          TextField(
-                            onChanged: (value) {},
-                            decoration: InputDecoration(
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                hintText: "Search Destinations",
-                                prefixIcon: const Icon(Icons.search_outlined),
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: getProportionateScreenWidth(20),
-                                  vertical: getProportionateScreenWidth(14),
-                                )),
-                          ),
-                        ],
+                      child: TextField(
+                        onChanged: (value) {},
+                        decoration: InputDecoration(
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            hintText: "Search Destinations",
+                            prefixIcon: const Icon(Icons.search_outlined),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: getProportionateScreenWidth(20),
+                              vertical: getProportionateScreenWidth(14),
+                            )),
                       ),
                     ),
                     // To add Arrow
                   ]),
               ),
+
+              SizedBox(height: getProportionateScreenHeight(20),),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -182,7 +182,7 @@ class _homeState extends State<home> {
                     padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10),vertical: 20),
                     child: MasonryGridView.count(
                         itemCount: imageUrls.length,
-                        mainAxisSpacing: getProportionateScreenHeight(10),
+                        mainAxisSpacing: getProportionateScreenHeight(25),
                         crossAxisCount: crossAxisCount.toInt(),
                         itemBuilder: (context, index) {
                           // int randomHeight = Random().nextInt(3);
@@ -220,7 +220,7 @@ class _homeState extends State<home> {
                                     }
                                   },
                                   child: Container(
-                                    width: getProportionateScreenWidth(170),
+                                    width: getProportionateScreenWidth(150),
                                     height: (2 % 5 + 1) * 100,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
