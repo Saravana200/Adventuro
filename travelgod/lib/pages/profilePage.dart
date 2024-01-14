@@ -37,7 +37,7 @@ class _ProfileState extends State<Profile> {
                                 backgroundImage: AssetImage('images/mainProfile.png'), // Replace with your profile image
                               ),
                               SizedBox(height: 30,),
-                              Text("Nigga",
+                              Text("",
                                 style: GoogleFonts.montserrat(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),),
                             ],
                           ),

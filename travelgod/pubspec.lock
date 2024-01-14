@@ -193,6 +193,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  cross_file:
+    dependency: transitive
+    description:
+      name: cross_file
+      sha256: "2f9d2cbccb76127ba28528cb3ae2c2326a122446a83de5a056aaa3880d3882c5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.3+7"
   crypto:
     dependency: transitive
     description:
@@ -1095,8 +1103,12 @@ packages:
     version: "3.1.2"
 sdks:
 <<<<<<< HEAD
+<<<<<<< HEAD
   dart: ">=3.1.4 <4.0.0"
 =======
   dart: ">=3.2.0 <4.0.0"
 >>>>>>> 8b0ee7c090d5bba4aaaf056e5da681e810a9c529
+=======
+  dart: ">=3.1.4 <4.0.0"
+>>>>>>> ee22623a88b301c0ffd4d2367d0e6e4b313485ff
   flutter: ">=3.13.0"

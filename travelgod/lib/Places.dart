@@ -19,18 +19,7 @@ class _PlacesViewState extends State<PlacesView> {
 
   String? budget;
 
-  void getAmounts() async {
-    var usdConvert = await MoneyConvert.convert(
-        Currency(Currency.INR, amount: 1), Currency(Currency.USD));
-    setState(() {
-      if(usdConvert!=null){
-        budget = usdConvert.toStringAsFixed(2);
-      }
-      else{
-        budget = "ERROR";
-      }
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +48,17 @@ Future<void> openGoogleMaps(double latitude, double longitude) async {
   }
 }
 
+Future<String> getAmounts(String country) async {
+  var usdConvert = await MoneyConvert.convert(
+      Currency(Currency.INR, amount: 1), Currency(Currency.USD));
+  if(usdConvert!=null){
+      return usdConvert.toStringAsFixed(2);
+  }
+  else{
+      return "ERROR";
+  }
+}
+
 
 
 Card buildCard(head,sub,url,supp,lati,longi) {
@@ -83,7 +83,7 @@ Card buildCard(head,sub,url,supp,lati,longi) {
                 Text(subheading),
                 IconButton(
                     onPressed: (){
-
+                      getAmounts(heading);
                     },
                     icon: Icon(Icons.arrow_right)
                 )

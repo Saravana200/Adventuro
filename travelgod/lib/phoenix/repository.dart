@@ -21,6 +21,11 @@ abstract class Repository{
   Future<Chatreply> GetMessage({
     @Body() ChatMsg? message,
   });
+
+  @GET('/describeimage')
+  Future<String> GetImageplaces({
+    @Query('url') String? url,
+});
 }
 
 

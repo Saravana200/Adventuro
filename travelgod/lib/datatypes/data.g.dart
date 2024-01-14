@@ -25,6 +25,16 @@ Map<String, dynamic> _$$ChatMsgImplToJson(_$ChatMsgImpl instance) =>
       'message': instance.message,
     };
 
+_$PlaceMsgImpl _$$PlaceMsgImplFromJson(Map<String, dynamic> json) =>
+    _$PlaceMsgImpl(
+      message: json['message'] as String?,
+    );
+
+Map<String, dynamic> _$$PlaceMsgImplToJson(_$PlaceMsgImpl instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+    };
+
 _$ChatreplyImpl _$$ChatreplyImplFromJson(Map<String, dynamic> json) =>
     _$ChatreplyImpl(
       message:
