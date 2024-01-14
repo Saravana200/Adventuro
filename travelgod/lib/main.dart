@@ -5,6 +5,7 @@ import 'package:travelgod/datatypes/test.dart';
 import 'package:travelgod/pages/authSelection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travelgod/pages/home.dart';
+import 'package:travelgod/pages/imageUpload.dart';
 // Import the generated file
 import 'firebase_options.dart';
 
@@ -17,11 +18,11 @@ void main()async{
   );
 
 
-  runApp(MentalHealth());
+  runApp(adventuro());
 }
 
-class MentalHealth extends StatelessWidget{
-  const MentalHealth({Key? key}) : super(key: key);
+class adventuro extends StatelessWidget{
+  const adventuro({Key? key}) : super(key: key);
 
 
 
@@ -32,6 +33,7 @@ class MentalHealth extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       // home: RedContainerApp(),
       home: uid==null?authSelection():home(name:'Mayur')
+      // home: UploadingImageToFirebaseStorage(),
     );
   }
 

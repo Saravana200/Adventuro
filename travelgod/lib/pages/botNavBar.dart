@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travelgod/pages/chat.dart';
+import 'package:travelgod/pages/imageUpload.dart';
 import 'package:travelgod/pages/profilePage.dart';
 import 'package:travelgod/screenComponents/ScreenSize.dart';
 
@@ -128,7 +129,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 onPressed: () { if (selectedMenu != MenuState.upload) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => UserUpload()),
+                    MaterialPageRoute(builder: (context) => UploadingImageToFirebaseStorage()),
                   );
                 }  },
               ),
